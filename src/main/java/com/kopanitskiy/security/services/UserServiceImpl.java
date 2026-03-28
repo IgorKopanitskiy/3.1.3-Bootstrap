@@ -69,6 +69,11 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userUpdate.getEmail());
         user.setPassword(userUpdate.getPassword());
 
+        if (userUpdate.getPassword() != null && !userUpdate.getPassword().isEmpty()) {
+            String encodedPassword = bCryptPasswordEncoder.encode(userUpdate.getPassword());
+            user.setPassword(encodedPassword);
+        }
+
         setUserRoles(user, roles);
 
         userDao.save(user);
